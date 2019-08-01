@@ -48,12 +48,49 @@ import axios from "../../src";
 //     }
 // })
 
-axios({
-    url: '/base/get',
-    params: {
-        p: '@# '
-    }
-})
+// axios({
+//     url: '/base/get',
+//     params: {
+//         p: '@# '
+//     }
+// })
+
+// axios({
+//     url: '/base/post',
+//     methods: 'post',
+//     data: {
+//         a: 1,
+//         b: 2
+//     }
+// })
+
+// const buffer =  new Uint32Array([21,31])
+// axios({
+//     url: '/base/buffer',
+//     methods: 'post',
+//     data: buffer
+// })
+
+// axios({
+//     url: '/base/post',
+//     methods: 'post',
+//     headers: {
+//         'content-type': 'application/json',
+//         'accept': 'application/json, text/plain, */*',
+//     },
+//     data: {
+//         c: 1,
+//         d: 1
+//     }
+// })
+
+// const paramsString = 'q=URLUtils.searchParams&topic=api'
+// const searchParams = new URLSearchParams(paramsString)
+// axios({
+//     url: '/base/post',
+//     methods: 'post',
+//     data: searchParams
+// })
 
 axios({
     url: '/base/post',
@@ -62,32 +99,18 @@ axios({
         a: 1,
         b: 2
     }
-})
-
-const buffer =  new Uint32Array([21,31])
-axios({
-    url: '/base/buffer',
-    methods: 'post',
-    data: buffer
+}).then((res) => {
+    console.log(res)
 })
 
 axios({
     url: '/base/post',
     methods: 'post',
-    headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json, text/plain, */*',
-    },
     data: {
         c: 1,
-        d: 1
-    }
-})
-
-const paramsString = 'q=URLUtils.searchParams&topic=api'
-const searchParams = new URLSearchParams(paramsString)
-axios({
-    url: '/base/post',
-    methods: 'post',
-    data: searchParams
+        d: 2
+    },
+    responseType: 'json'
+}).then((res) => {
+    console.log(res)
 })
