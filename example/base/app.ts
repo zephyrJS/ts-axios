@@ -92,25 +92,60 @@ import axios from "../../src";
 //     data: searchParams
 // })
 
+// axios({
+//     url: '/base/post',
+//     methods: 'post',
+//     data: {
+//         a: 1,
+//         b: 2
+//     }
+// }).then((res) => {
+//     console.log(res)
+// })
+
+// axios({
+//     url: '/base/post',
+//     methods: 'post',
+//     data: {
+//         c: 1,
+//         d: 2
+//     },
+//     responseType: 'json'
+// }).then((res) => {
+//     console.log(res)
+// })
+
 axios({
-    url: '/base/post',
-    methods: 'post',
-    data: {
-        a: 1,
-        b: 2
-    }
-}).then((res) => {
+    url: '/error/get1'
+}).then(res => {
     console.log(res)
+}).catch(e => {
+    console.log(e)
 })
 
 axios({
-    url: '/base/post',
-    methods: 'post',
-    data: {
-        c: 1,
-        d: 2
-    },
-    responseType: 'json'
-}).then((res) => {
+    url: '/error/get'
+}).then(res => {
     console.log(res)
+}).catch(e => {
+    console.log(e)
+})
+
+setTimeout(()=> {
+    axios({
+        url: '/error/get'
+    }).then(res => {
+        console.log(res)
+    }).catch(e => {
+        console.log(e)
+    })
+}, 5000)
+
+axios({
+    url: '/error/timeout',
+    timeout: 2000
+}).then(res => {
+    console.log(res)
+}).catch(e => {
+    console.log(e)
 })

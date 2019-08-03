@@ -2,19 +2,34 @@ import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import { parseHeaders } from './helpers/headers'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
-    return new Promise(resolve => {
-        const { methods = 'get', url, data = null, headers, responseType } = config
+    return new Promise((resolve, reject) => {
+        const { methods = 'get', url, data = null, headers, responseType, timeout } = config
         const request = new XMLHttpRequest()
         if (responseType) {
             request.responseType = responseType
         }
+        if (timeout) {
+            request.timeout = timeout
+        }
 
         request.open(methods.toUpperCase(), url, true)
+
+        request.onerror = function handleError() {
+            reject(new Error('Network Error'))
+        }
+
+        request.ontimeout = function handleTimeout() {
+            reject(new Error(`Timeout Error ${timeout} ms`))
+        }
 
         request.onreadystatechange = function handleLoad() {
             if (!request || request.readyState !== 4) {
                 return
             }
+            if (request.status === 0) {
+                return
+            }
+
             const responseHeaders = parseHeaders(request.getAllResponseHeaders())
             const responseData = responseType === 'text' ? request.responseText : request.response
             const response: AxiosResponse = {
@@ -25,7 +40,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
                 config,
                 request
             }
-            resolve(response)
+            handleResponse(response)
         }
 
         Object.keys(headers).forEach(name => {
@@ -36,5 +51,13 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
             }
         })
         request.send(data)
+
+        function handleResponse(response: AxiosResponse): void {
+            if (request.status >= 200 && request.timeout < 300) {
+                resolve(response)
+            } else {
+                reject(response)
+            }
+        }
     })
 }
