@@ -115,13 +115,13 @@ import axios from "../../src";
 //     console.log(res)
 // })
 
-axios({
-    url: '/error/get1'
-}).then(res => {
-    console.log(res)
-}).catch(e => {
-    console.log(e)
-})
+// axios({
+//     url: '/error/get1'
+// }).then(res => {
+//     console.log(res)
+// }).catch(e => {
+//     console.log(e)
+// })
 
 axios({
     url: '/error/get'
