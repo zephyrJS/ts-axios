@@ -64,6 +64,21 @@ router.get('/error/get', function(req, res) {
         res.end()
     }
 })
+router.get('/base/user', function (req, res) {
+    res.json({
+        code: 200,
+        result: {
+            name: 'test',
+            age: 11
+        },
+        msg: 'success'
+    })
+})
+
+router.get('/interceptor/get', function (req, res) {
+    res.json('hello')
+})
+
 app.use(router)
 
 const port = process.env.PORT || 8080

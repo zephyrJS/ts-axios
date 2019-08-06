@@ -123,17 +123,17 @@ import axios, { AxiosError } from "../../src";
 //     console.log(e)
 // })
 
-axios({
-    url: '/error/get'
-}).then(res => {
-    console.log(res)
-}).catch((e:AxiosError) => {
-    console.log(e.message)
-    console.log(e.config)
-    console.log(e.code)
-    console.log(e.request)
-    console.log(e.response)
-})
+// axios({
+//     url: '/error/get'
+// }).then(res => {
+//     console.log(res)
+// }).catch((e:AxiosError) => {
+//     console.log(e.message)
+//     console.log(e.config)
+//     console.log(e.code)
+//     console.log(e.request)
+//     console.log(e.response)
+// })
 
 // setTimeout(()=> {
 //     axios({
@@ -153,3 +153,38 @@ axios({
 // }).catch(e => {
 //     console.log(e)
 // })
+
+// axios('/base/post', {
+//     method: 'post',
+//     data: {
+//         a: 1
+//     }
+// })
+
+interface ResponseData<T> {
+    code: number,
+    result: T,
+    msg: string
+}
+
+interface User {
+    name: string,
+    age: number
+}
+
+
+function getUser<T>() {
+    return axios<ResponseData<T>>('/base/user')
+        .then(res => res.data)
+        .catch(e => console.error(e))
+}
+
+async function test() {
+    const user = await getUser<User>()
+    if(user) {
+        console.log(user.result.name)
+    }
+}
+
+test()
+
