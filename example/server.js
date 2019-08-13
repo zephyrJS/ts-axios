@@ -38,7 +38,7 @@ router.post('/base/post', function (req, res) {
 router.post('/base/buffer', function (req, res) {
     let msg = []
     req.on('data', chunk => {
-        if(chunk) {
+        if (chunk) {
             msg.push(chunk)
         }
     })
@@ -47,19 +47,19 @@ router.post('/base/buffer', function (req, res) {
         res.json(buf.toJSON())
     })
 })
-router.get('/error/timeout', function(req, res) {
-    setTimeout(()=>{
+router.get('/error/timeout', function (req, res) {
+    setTimeout(() => {
         res.json({
             msg: 'hello world'
         })
     }, 5000)
 })
-router.get('/error/get', function(req, res) {
-    if(Math.random() > 0.5) {
+router.get('/error/get', function (req, res) {
+    if (Math.random() > 0.5) {
         res.json({
             msg: 'hellow world'
         })
-    }else {
+    } else {
         res.status(500)
         res.end()
     }
@@ -81,6 +81,18 @@ router.get('/interceptor/get', function (req, res) {
 
 router.post('/config/post', function (req, res) {
     res.json(req.body)
+})
+
+router.get('/cancel/get', function (req, res) {
+    setTimeout(() => {
+        res.json('hello')
+    }, 1000)
+})
+
+router.post('/cancel/post', function (req, res) {
+    setTimeout(() => {
+        res.json(req.body)
+    }, 1000)
 })
 
 app.use(router)
