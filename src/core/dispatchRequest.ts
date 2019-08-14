@@ -18,7 +18,7 @@ function processConfig(config: AxiosRequestConfig): void {
     config.headers = flattenHeaders(config.headers, config.method!)
 }
 
-function transformUrl(config: AxiosRequestConfig): string {
+export function transformUrl(config: AxiosRequestConfig): string {
     const { url, params } = config
     return buildUrl(url!, params)
 }
