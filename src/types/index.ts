@@ -81,7 +81,7 @@ export interface AxiosInstance extends Axios {
 export interface AxiosStatic extends AxiosInstance {
     create(config?: AxiosRequestConfig): AxiosInstance
     CancelToken: CancelTokenStatic
-    Cancel: Cancel
+    Cancel: CancelStatic
 
     all<T>(promises: Array<T | Promise<T>>): Promise<T[]>
     spread<T, R>(callback: (...arg: T[]) => R): (arr: T[]) => R

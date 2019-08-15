@@ -31,14 +31,14 @@ describe('helpers: util', () => {
     })
 
     describe('extend', () => {
-        describe('should be mutable', () => {
+        test('should be mutable', () => {
             const a = Object.create(null)
             const b = { foo: 123 }
             extend(a, b)
 
             expect(a.foo).toBe(123)
         })
-        describe('should extend properties', () => {
+        test('should extend properties', () => {
             const a = { foo: 123, bar: 456 }
             const b = { bar: 789 }
             const c = extend(a, b)
@@ -70,6 +70,39 @@ describe('helpers: util', () => {
 
             expect(d.bar).toBe(1)
             expect(d.foo).toBe(3)
+        })
+
+        test('should deepMerge recursively', () => {
+            const a = { foo: { test1: 0 } }
+            const b = { foo: { test1: 1 }, bar: { test2: 2 } }
+            const c = deepMerge(a, b)
+
+            expect(c).toEqual({
+                foo: { test1: 1 },
+                bar: { test2: 2 }
+            })
+        })
+
+        test('should deepMerge not to be', () => {
+            const a = { bar: { test: 1 } }
+            const b = { foo: { test2: 2 } }
+            const c = deepMerge(a, b)
+
+            expect(c).toEqual({
+                bar: { test: 1 },
+                foo: { test2: 2 }
+            })
+
+            expect(c.bar).not.toBe(a.bar)
+        })
+
+        test('should handle null and undefined args', () => {
+            expect(deepMerge(undefined, undefined)).toEqual({})
+            expect(deepMerge(undefined, { a: 1 })).toEqual({ a: 1 })
+            expect(deepMerge({ a: 1 }, undefined)).toEqual({ a: 1 })
+            expect(deepMerge(null, null)).toEqual({})
+            expect(deepMerge(null, { a: 1 })).toEqual({ a: 1 })
+            expect(deepMerge({ a: 1 }, null)).toEqual({ a: 1 })
         })
     })
 })
