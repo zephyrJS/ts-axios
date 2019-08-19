@@ -16,7 +16,7 @@ function encode(val: string): string {
         .replace(/\%5D/g, ']')
 }
 
-export function buildUrl(url: string, params: any): string {
+export function buildUrl(url: string, params?: any): string {
     if (!params) return url
 
     const parts: string[] = []
